@@ -25,7 +25,7 @@ App con la API de **[Giphy](https://giphy.com/)** para cargar GIFs infinitos.
 Puedes clonar el proyecto descargando el archivo ZIP o ejecutando el siguiente comando:
 
 ```shell
-git clone https://github.com/miguelgonzalezzdev/pokeapi-react.git
+git clone https://github.com/miguelgonzalezzdev/gifs-app.git
 ```
 
 ### 2. Instalar las dependencias
