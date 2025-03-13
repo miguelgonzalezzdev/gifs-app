@@ -14,6 +14,10 @@ App con la API de **[Giphy](https://giphy.com/)** para cargar GIFs infinitos.
 
 ## Proyecto 🚀
 
+![Imagen de la App de GIFs](https://github.com/user-attachments/assets/2f2ee44e-f16c-4d30-abec-d3c80ac92adf)
+
+![Imagen de la App de GIFs](https://github.com/user-attachments/assets/809f4337-b665-456f-8585-c66701ccf8bb)
+
 ## Probar proyecto 💻
 
 ### 1. Clonar el proyecto
