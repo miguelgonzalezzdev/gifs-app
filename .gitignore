@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-src/consts.js
+src/consts.ts
 package-lock.json
 node_modules
 dist

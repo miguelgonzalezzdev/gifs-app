@@ -1,47 +1,13 @@
-import { useEffect, useState } from 'react'
 import ReactIcon from './icons/ReactIcon'
 import TypescriptIcon from './icons/TypescriptIcon'
 import TailwindcssIcon from './icons/TailwindcssIcon'
 import ReactqueryIcon from './icons/Reactquery'
 import { Gifs } from './components/Gifs'
-import { API_KEY } from './consts'
+import { useGifs } from './hooks/useGifs'
 
 function App() {
-  const [gifs, setGifs] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [currentOffset, setCurrentOffset] = useState(0)
-
-  useEffect(() => {
-    setLoading(true)
-    setError(false)
-
-    fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=30&offset=${currentOffset}`)
-      .then(res => res.json())
-      .then(json => {
-        if (json && Array.isArray(json.data)) {
-          const newGifs = json.data.map(gif => ({
-            id: gif.id,
-            url: gif.images.original.url,
-            title: gif.title,
-            images: gif.images
-          }))
-          setGifs(prevGifs => prevGifs.concat(newGifs));
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error)
-        setError(false)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [currentOffset])
-
-  const handleClick = () => {
-    const newCurrentOffset = currentOffset + 30
-    setCurrentOffset(newCurrentOffset)
-  }
+  
+  const { isLoading, isError, gifs, fetchNextPage, hasNextPage } = useGifs()
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen w-full bg-stone-900 bg-[linear-gradient(to_right,#2d2d2d,transparent_1px),linear-gradient(to_bottom,#2d2d2d,transparent_1px)] bg-[size:6rem_4rem]">
@@ -51,12 +17,12 @@ function App() {
       <main className='p-4 mb-24 flex flex-col items-center justify-start gap-20'>
         {gifs && <Gifs gifs={gifs} />}
 
-        {loading && !error && <p>Cargando...</p>}
+        {isLoading && !isError && <p className='text-white'>Cargando...</p>}
 
-        {!loading && error && <p>Error al cargar los GIFs</p>}
+        {!isLoading && isError && <p className='text-white'>Error al cargar los GIFs</p>}
 
-        {!loading && !error && 
-          <button onClick={handleClick} className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-xl px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>Ver más</button>
+        {!isLoading && !isError && hasNextPage &&
+          <button onClick={() => { fetchNextPage() }} className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-xl px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>Ver más</button>
         }
       </main>
       <footer className="flex items-center justify-center gap-4 fixed bottom-0 left-0 right-0 bg-[#2d2d2d] text-white p-4 text-center">
